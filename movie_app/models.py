@@ -23,7 +23,7 @@ class Movie(models.Model):
     year = models.IntegerField(null=True, blank=True,  # бланк отвечает за возможность сохранить пустое поле
                                validators=[MinValueValidator(1950), MaxValueValidator(NOW_YEAR)],
                                default=2022)
-    budget = models.IntegerField(validators=[MinValueValidator(1)], )
+    budget = models.IntegerField(validators=[MinValueValidator(1)])
     slug = models.SlugField(default='', null=False, db_index=True)
 
     def __str__(self):
