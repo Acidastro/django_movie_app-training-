@@ -1,8 +1,25 @@
 from django.db import models
 from django.urls import reverse
-from django.utils.text import slugify
+from pytils.translit import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
+
+
+class Director(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    director_email = models.EmailField()
+    slug = models.SlugField(default='', null=False, db_index=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def get_url(self):
+        return reverse('directors-detail', args=[self.slug, ])
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.first_name + self.last_name)
+        super(Director, self).save(*args, **kwargs)
 
 
 class Movie(models.Model):
@@ -25,6 +42,8 @@ class Movie(models.Model):
                                default=2022)
     budget = models.IntegerField(validators=[MinValueValidator(1)])
     slug = models.SlugField(default='', null=False, db_index=True)
+    director = models.ForeignKey(Director, on_delete=models.PROTECT,
+                                 null=True)  # связь с таблицей Director (один ко многим)
 
     def __str__(self):
         return f'{self.name} - {self.rating}%'
