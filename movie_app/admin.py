@@ -1,6 +1,8 @@
 from django.contrib import admin, messages
-from .models import Movie
+from .models import Movie, Director
 from django.db.models import QuerySet
+
+admin.site.register(Director)   # для отображения в админке
 
 
 # Класс для фильтров
@@ -30,16 +32,17 @@ class RatingFilter(admin.SimpleListFilter):
 
 
 @admin.register(Movie)
-class MovieAdmin(admin.ModelAdmin):
-    list_display = ['name', 'rating', 'currency', 'budget', 'rating_status']  # список отображения
-    list_editable = ['rating', 'currency', 'budget']  # список редактирования, любые кроме первого
+class MovieAdmin(admin.ModelAdmin): # для отображения таблицы в админке
+    list_display = ['name', 'rating', 'director', 'budget', 'rating_status']  # список отображения
+    list_editable = ['rating', 'director', 'budget']  # список редактирования, любые кроме первого
     # ordering = ['-rating', 'name']  # сортировка
     list_per_page = 10  # количество отображаемых строк
     actions = ['set_dollars', 'set_euro']  # активная кнопка в "действие"
     search_fields = ['name']  # строка поиска по "name"
-    list_filter = ['name', 'currency', RatingFilter]  # колонка фильтрации
+    list_filter = ['name', RatingFilter]  # колонка фильтрации
     # readonly_fields = ['year']  # поле нельзя редактировать
     prepopulated_fields = {'slug': ('name',)}  # slug будет вычисляться по полю name
+
     # exclude = ['year']  # не показывать при создании и редактировании
 
     @admin.action(description='Установить валюту в доллар')  # сообщает о совершении действия

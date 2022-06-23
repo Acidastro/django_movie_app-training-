@@ -3,6 +3,9 @@
     Все фильмы
 {% endblock %}
 {% block content %}
+
+    <h1><a href="admin">Admin</a></h1>
+    <h2><a href="directors">Список всех режиссеров</a></h2>
     <h2>Список всех фильмов</h2>
     <ul>
         {% for movie in movies %}
@@ -10,9 +13,5 @@
                 - {{ movie.year }}</li>
         {% endfor %}
     </ul>
-    <h3>Средний бюджет - {{ agg.budget__avg }}</h3>
-    <h3>Максимальный рейтинг - {{ agg.rating__max }}</h3>
-    <h3>Минимальный рейтинг - {{ agg.rating__min }}</h3>
-    <h3>Всего фильмов - {{ agg.id__count }}</h3>
 
 {% endblock %}
