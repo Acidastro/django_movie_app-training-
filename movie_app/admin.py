@@ -1,8 +1,14 @@
 from django.contrib import admin, messages
-from .models import Movie, Director
+from .models import Movie, Director, Actor, DressingRoom
 from django.db.models import QuerySet
 
-admin.site.register(Director)   # для отображения в админке
+admin.site.register(Director)  # для отображения в админке
+admin.site.register(Actor)  # для отображения в админке
+
+
+@admin.register(DressingRoom)
+class DressingRoomAdmin(admin.ModelAdmin):  # для отображения таблицы в админке
+    list_display = ['floor', 'numbers', 'actor']  # список отображения
 
 
 # Класс для фильтров
@@ -32,7 +38,7 @@ class RatingFilter(admin.SimpleListFilter):
 
 
 @admin.register(Movie)
-class MovieAdmin(admin.ModelAdmin): # для отображения таблицы в админке
+class MovieAdmin(admin.ModelAdmin):  # для отображения таблицы в админке
     list_display = ['name', 'rating', 'director', 'budget', 'rating_status']  # список отображения
     list_editable = ['rating', 'director', 'budget']  # список редактирования, любые кроме первого
     # ordering = ['-rating', 'name']  # сортировка
@@ -42,6 +48,7 @@ class MovieAdmin(admin.ModelAdmin): # для отображения таблиц
     list_filter = ['name', RatingFilter]  # колонка фильтрации
     # readonly_fields = ['year']  # поле нельзя редактировать
     prepopulated_fields = {'slug': ('name',)}  # slug будет вычисляться по полю name
+    filter_horizontal = ['actors']
 
     # exclude = ['year']  # не показывать при создании и редактировании
 

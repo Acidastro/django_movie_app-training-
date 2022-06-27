@@ -4,13 +4,13 @@
 {% endblock %}
 {% block content %}
 
-    <h1><a href="admin">Admin</a></h1>
-    <h2><a href="directors">Список всех режиссеров</a></h2>
-    <h2>Список всех фильмов</h2>
+    <h2>Список фильмов</h2>
     <ul>
         {% for movie in movies %}
-            <li><a href="{{ movie.get_url }}">{{ movie.name }}</a> рейтинг - {{ movie.rating }} год
-                - {{ movie.year }}</li>
+            <h3>
+                <li><a href="{{ movie.get_url }}">{{ movie.name }}</a> рейтинг - {{ movie.rating }} год
+                    - {{ movie.year }}</li>
+            </h3>
         {% endfor %}
     </ul>
 
