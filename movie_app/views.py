@@ -1,6 +1,19 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Movie, Director
+from .models import Movie, Director, Actor
 from django.db.models import F, Sum, Max, Min, Count, Avg, Value
+
+
+def index(request):
+    movies = Movie.objects.all()
+    actors = Actor.objects.all()
+    directors = Director.objects.all()
+
+    return render(request, 'movie_app/index.html', {
+        'movies': movies,
+        'actors': actors,
+        'directors': directors,
+
+    })
 
 
 def show_all_movie(request):
@@ -25,8 +38,10 @@ def show_all_movie(request):
 def show_one_movie(request, slug_movie: str):
     # метод get достает данные об одном объекте
     movie = get_object_or_404(Movie, slug=slug_movie)
+    # actors = Movie.objects.filter(actors__slug=slug_movie)
     return render(request, 'movie_app/one_movie.html', {
-        'movie': movie
+        'movie': movie,
+        # 'actors': actors,
     })
 
 
@@ -43,4 +58,19 @@ def show_one_director(request, slug_director: str):
     director = get_object_or_404(Director, slug=slug_director)
     return render(request, 'movie_app/one_director.html', {
         'director': director,
+    })
+
+
+def show_all_actors(request):
+    actors = Actor.objects.all()
+    return render(request, 'movie_app/all_actors.html', {
+        'actors': actors,
+    })
+
+
+def show_one_actor(request, slug_actors: str):
+    # метод get достает данные об одном объекте
+    actor = get_object_or_404(Actor, slug=slug_actors)
+    return render(request, 'movie_app/one_actor.html', {
+        'actor': actor,
     })

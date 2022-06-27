@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Список директоров</h1>
+    <h1>Список режисеров</h1>
     <ul>
         {% for director in directors %}
-            <li><a href="{{ director.get_url }}">{{ director }}</a></li>
+            <h3>
+                <li><a href="{{ director.get_url }}">{{ director }}</a></li>
+            </h3>
 
         {% endfor %}
 

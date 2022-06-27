@@ -5,11 +5,43 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 
+class DressingRoom(models.Model):
+    floor = models.IntegerField()
+    numbers = models.IntegerField()
+
+    def __str__(self):
+        return f'Этаж {self.floor} Комната {self.numbers}'
+
+
+class Actor(models.Model):
+    FEMALE = 'F'
+    MALE = 'M'
+    GENDER = [
+        (FEMALE, 'Женщина'),
+        (MALE, 'Мужчина'),
+    ]
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    gender = models.CharField(max_length=1, default=MALE, choices=GENDER)
+    slug = models.SlugField(default='', null=False, db_index=True, blank=True)
+    dressing = models.OneToOneField(DressingRoom, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def get_url(self):
+        return reverse('actors-detail', args=[self.slug, ])
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.first_name + self.last_name)
+        super(Actor, self).save(*args, **kwargs)
+
+
 class Director(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    director_email = models.EmailField()
-    slug = models.SlugField(default='', null=False, db_index=True)
+    director_email = models.EmailField(blank=True)
+    slug = models.SlugField(default='', null=False, db_index=True, blank=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -44,6 +76,7 @@ class Movie(models.Model):
     slug = models.SlugField(default='', null=False, db_index=True)
     director = models.ForeignKey(Director, on_delete=models.PROTECT,
                                  null=True)  # связь с таблицей Director (один ко многим)
+    actors = models.ManyToManyField(Actor)
 
     def __str__(self):
         return f'{self.name} - {self.rating}%'

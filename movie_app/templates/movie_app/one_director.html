@@ -9,4 +9,18 @@
     <h2>Имя - {{ director.first_name }}</h2>
     <h2>Фамилия - {{ director.last_name }}</h2>
     <h2>Почта - {{ director.director_email }}</h2>
+    <hr>
+    <h2>Список фильмов:</h2>
+    <ul>
+        {% for movie in director.movie_set.all %}
+            <h3>
+                <a href="{{ movie.get_url }}">
+                    <li>{{ movie }}</li>
+                </a>
+            </h3>
+
+        {% endfor %}
+    </ul>
+
+
 {% endblock %}
