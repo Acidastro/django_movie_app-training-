@@ -31,7 +31,7 @@ class Actor(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     def get_url(self):
-        return reverse('actors-detail', args=[self.slug, ])
+        return reverse('actor-detail', args=[self.slug, ])
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.first_name + self.last_name)
@@ -48,7 +48,7 @@ class Director(models.Model):
         return f'{self.first_name} {self.last_name}'
 
     def get_url(self):
-        return reverse('directors-detail', args=[self.slug, ])
+        return reverse('director-detail', args=[self.slug, ])
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.first_name + self.last_name)

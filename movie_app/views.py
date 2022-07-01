@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Movie, Director, Actor
 from django.db.models import F, Sum, Max, Min, Count, Avg, Value
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
 def index(request):
@@ -35,14 +35,10 @@ def show_all_movie(request):
     })
 
 
-def show_one_movie(request, slug_movie: str):
-    # метод get достает данные об одном объекте
-    movie = get_object_or_404(Movie, slug=slug_movie)
-    # actors = Movie.objects.filter(actors__slug=slug_movie)
-    return render(request, 'movie_app/one_movie.html', {
-        'movie': movie,
-        # 'actors': actors,
-    })
+class DetailMovie(DetailView):
+    template_name = 'movie_app/one_movie.html'
+    context_object_name = 'movie'
+    model = Movie
 
 
 class ListDirector(ListView):
@@ -51,11 +47,10 @@ class ListDirector(ListView):
     model = Director
 
 
-def show_one_director(request, slug_director: str):
-    director = get_object_or_404(Director, slug=slug_director)
-    return render(request, 'movie_app/one_director.html', {
-        'director': director,
-    })
+class DetailDirector(DetailView):
+    template_name = 'movie_app/one_director.html'
+    model = Director
+    context_object_name = 'director'
 
 
 class ListActor(ListView):
@@ -64,8 +59,7 @@ class ListActor(ListView):
     context_object_name = 'actors'
 
 
-def show_one_actor(request, slug_actors: str):
-    actor = get_object_or_404(Actor, slug=slug_actors)
-    return render(request, 'movie_app/one_actor.html', {
-        'actor': actor,
-    })
+class DetailActor(DetailView):
+    template_name = 'movie_app/one_actor.html'
+    model = Actor
+    context_object_name = 'actor'
