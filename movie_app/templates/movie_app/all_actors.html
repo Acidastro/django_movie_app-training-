@@ -6,11 +6,9 @@
 
 {% block content %}
     <h1>Список актеров</h1>
-    <ul>
-        <h3>        {% for actor in actors %}
-            <li><a href="{{ actor.get_url }}">{{ actor }}</a></li>
+    {% for actor in actors %}
+        <h3><a href="{{ actor.get_url }}">{{ actor }}</a></h3>
 
-        {% endfor %}</h3>
+    {% endfor %}
 
-    </ul>
 {% endblock %}

@@ -5,13 +5,11 @@
 {% block content %}
 
     <h2>Список фильмов</h2>
-    <ul>
         {% for movie in movies %}
             <h3>
-                <li><a href="{{ movie.get_url }}">{{ movie.name }}</a> рейтинг - {{ movie.rating }} год
-                    - {{ movie.year }}</li>
+                <a href="{{ movie.get_url }}">{{ movie.name }}</a> рейтинг - {{ movie.rating }} год
+                    - {{ movie.year }}
             </h3>
         {% endfor %}
-    </ul>
 
 {% endblock %}

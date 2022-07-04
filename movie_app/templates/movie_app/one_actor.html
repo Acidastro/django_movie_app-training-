@@ -5,26 +5,17 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Актер</h2>
-    <h2>Имя - {{ actor.first_name }}</h2>
-    <h2>Фамилия - {{ actor.last_name }}</h2>
-    <h2>
-        {% if actor.gender == 'M' %}
-            Пол - Мужской
-        {% else %}
-            Пол - Женский
-        {% endif %}
-    </h2>
+    <h1>АКТЕР</h1>
+    <h2>{{ actor.first_name }} {{ actor.last_name }}</h2>
+
     <hr>
     <h2>Список фильмов:</h2>
-        <ul>
-        {% for movie in actor.movie_set.all %}
-            <h3>
-                <a href="{{ movie.get_url }}">
-                    <li>{{ movie }}</li>
-                </a>
-            </h3>
+    {% for movie in actor.movie_set.all %}
+        <h3>
+            <a href="{{ movie.get_url }}">
+                {{ movie.name }} ({{ movie.year }})
+            </a>
+        </h3>
 
-        {% endfor %}
-    </ul>
+    {% endfor %}
 {% endblock %}

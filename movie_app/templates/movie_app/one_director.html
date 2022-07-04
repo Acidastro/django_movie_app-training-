@@ -5,22 +5,19 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Режиссер</h2>
-    <h2>Имя - {{ director.first_name }}</h2>
-    <h2>Фамилия - {{ director.last_name }}</h2>
-    <h2>Почта - {{ director.director_email }}</h2>
+    <h1>РЕЖИССЕР</h1>
+    <h2>{{ director.first_name }} {{ director.last_name }}</h2>
+    {% if director.director_email %}
+        <h2>Почта:{{ director.director_email }}</h2>
+    {% endif %}
     <hr>
-    <h2>Список фильмов:</h2>
-    <ul>
-        {% for movie in director.movie_set.all %}
-            <h3>
-                <a href="{{ movie.get_url }}">
-                    <li>{{ movie }}</li>
-                </a>
-            </h3>
-
-        {% endfor %}
-    </ul>
-
+    <h1>Список фильмов:</h1>
+    {% for movie in director.movie_set.all %}
+        <h3>
+            <a href="{{ movie.get_url }}">
+                {{ movie }}
+            </a>
+        </h3>
+    {% endfor %}
 
 {% endblock %}

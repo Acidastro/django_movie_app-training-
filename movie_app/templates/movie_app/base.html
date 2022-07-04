@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'movie_app/base.css' %}">
 </head>
+    {% include 'movie_app/include/navbar.html' %}
+
 <body>
 {% block content %} {% endblock %}
 </body>

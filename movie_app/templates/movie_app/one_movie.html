@@ -3,20 +3,16 @@
 {% block title %} Информация о фильме {{ movie.name }}{% endblock %}
 
 {% block content %}
-    <h2>Информация о фильме - {{ movie.name }}</h2>
-    <h3>Режиссер - <a href="{{ movie.director.get_url }}">{{ movie.director }}</a></h3>
-    <h3>Рейтинг - {{ movie.rating }}
-    <h3>Бюджет - {{ movie.budget }}</h3>
-    <h3>Год выхода - {{ movie.year }}</h3>
+    <h1>Информация о фильме - {{ movie.name }} ({{ movie.year }})</h1>
+    <h2>Режиссер - <a href="{{ movie.director.get_url }}">{{ movie.director }}</a></h2>
+    <h2>Рейтинг - {{ movie.rating }}
+    <h2>Бюджет фильма - {{ movie.budget }}{{ movie.currency }}</h2>
     <hr>
-    <h3>Список актеров:</h3>
-    <ul>
-        {% for actor in movie.actors.all %}
-            <h3>
-                <li><a href="{{ actor.get_url }}">{{ actor }}</a>
-                </li>
-            </h3>
-        {% endfor %}
+    <h1>Список актеров</h1>
+    {% for actor in movie.actors.all %}
 
-    </ul>
+        <h3><a href="{{ actor.get_url }}">{{ actor }}</a></h3>
+
+    {% endfor %}
+
 {% endblock %}

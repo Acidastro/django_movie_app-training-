@@ -17,22 +17,10 @@ def index(request):
     })
 
 
-def show_all_movie(request):
-    # movies = Movie.objects.order_by(F('name').asc(nulls_last=True))
-    movies = Movie.objects.annotate(
-        false_bool=Value(True),
-        true_bool=Value(False),
-        str_field=Value('Hello'),
-        int_field=Value(533),
-        new_budget=F('budget') + 100,
-        year_plus_rating=F('rating') + F('year'),
-
-    )
-    agg = movies.aggregate(Avg('budget'), Max('rating'), Min('rating'), Count('id'))
-    return render(request, 'movie_app/all_movies.html', {
-        'movies': movies,
-        'agg': agg,
-    })
+class ListMovie(ListView):
+    template_name = 'movie_app/all_movies.html'
+    context_object_name = 'movies'
+    model = Movie
 
 
 class DetailMovie(DetailView):
